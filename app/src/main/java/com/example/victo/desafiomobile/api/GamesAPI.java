@@ -1,41 +1,42 @@
 package com.example.victo.desafiomobile.api;
 
-import android.widget.Toast;
 
-import com.example.victo.desafiomobile.Models.Game;
-
-import java.util.List;
+import com.example.victo.desafiomobile.Game.ListGame;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GamesAPI {
 
-    public GamesAPI() {
+    private static GamesAPI instance;
+    private GamesService gamesService;
 
+    public static GamesAPI getInstance(){
+        if(instance == null){
+            instance = new GamesAPI();
+        }
+        return instance;
+    }
+
+    private GamesAPI(){
         Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl(GamesService.BASE_URL)
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
+                .baseUrl("https://dl.dropboxusercontent.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        GamesService api = retrofit.create(GamesService.class);
+        this.gamesService = retrofit.create(GamesService.class);
+    }
 
-        Call<List<Game>> call = api.getGames();
+    /*private Converter.Factory defaultConvertFactory() {
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("dd-MM-yyyy'T'HH:mm:ss")
+                .create();
+        return GsonConverterFactory.create(gson);
+    }*/
 
-        call.enqueue(new Callback<List<Game>>() {
-            @Override
-            public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Game>> call, Throwable t) {
-                Toast.makeText(, "Erro: "+ t.getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
+    public Call<ListGame> getGames(){
+        return gamesService.getGames();
     }
 }
