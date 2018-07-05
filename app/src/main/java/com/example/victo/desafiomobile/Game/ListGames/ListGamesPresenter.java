@@ -16,7 +16,7 @@ public class ListGamesPresenter {
     }
 
     public void getListGames() {
-        final GamesAPI gamesAPI = GamesAPI.getInstance();
+        final GamesAPI gamesAPI = new GamesAPI();
         gamesAPI.getGames().enqueue(new Callback<ListGame>() {
             @Override
             public void onResponse(Call<ListGame> call, Response<ListGame> response) {
