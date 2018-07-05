@@ -26,7 +26,6 @@ public class ListGamesActivity extends AppCompatActivity implements ListGamesCon
     ProgressBar progressbar;
 
     private ListGamesAdapter adapter;
-    private DividerItemDecoration mDividerItemDecoration;
     ListGamesPresenter presenter;
 
     @Override
@@ -56,12 +55,7 @@ public class ListGamesActivity extends AppCompatActivity implements ListGamesCon
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
-        mDividerItemDecoration = new DividerItemDecoration(
-                recyclerView.getContext(),
-                LinearLayoutManager.VERTICAL
-        );
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(mDividerItemDecoration);
         progressbar.setVisibility(View.GONE);
     }
 
